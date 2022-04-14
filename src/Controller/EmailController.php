@@ -19,7 +19,7 @@ class EmailController extends AbstractController
     {
         $email=(new TemplatedEmail())
         ->from('sakshigoraniya13@gmail.com')
-        ->to('sakshigoraniya13@gmail.com')
+        ->to('riyajoshi312@gmail.com')
         ->subject('you order has been placed')
         ->context([
             'expiration_date' => new \DateTime('+7 days'),
@@ -28,8 +28,8 @@ class EmailController extends AbstractController
         
         ->attachFromPath('/home/sakshigoraniya/Documents/projectideas.odt')
         ->embedFromPath('/home/sakshigoraniya/Pictures/logo.png', 'logo')
-        ->html('<img src="cid:logo">')
-        ->htmltemplate('emails/signup.html.twig')
+        #->html('<img src="cid:logo">')
+        ->htmltemplate('emails/welcome.html.twig')
         ;
 
         $mailer->send($email);
@@ -37,5 +37,22 @@ class EmailController extends AbstractController
         return new Response('email sent');
 
     }
+     /**
+     * @Route("/welcome")
+     */
+    public function HomePage(MailerInterface $mailer)
+    {
+       
+        return $this->render('emails/welcome.html.twig');
+
+    }
     
+    /**
+     * @Route("/", name="app_homepage")
+     */
+    public function welcomepage()
+    {
+    
+        return $this->render('emails/index.html.twig');
+    }
 }
